@@ -1,0 +1,12 @@
+mybatis:
+  #  config-location: classpath:mybatis/mybatis-config.xml  #指定  mybatis 全局配置文件,此方法较为麻烦,不建议使用
+  mapper-locations: classpath:mybaties/mapper/*.xml
+  configuration:  #配置  mybatis 全局配置文件
+    map-underscore-to-camel-case: true  # mybatis配置类:jar包中封装的 Configuration 开启命名规则
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 9090
+
+
+
+

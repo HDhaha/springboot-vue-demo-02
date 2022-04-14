@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.mapper.AccountMapper">
+
+    <resultMap id="accountFileds" type="com.springboot.domain.Account">
+        <result property="id" column="id"></result>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="nickName" column="nick_name"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+        <result property="register" column="register"></result>
+        <result property="age" column="age"></result>
+    </resultMap>
+    <insert id="addAccount">
+        insert into account(username,password) values (#{username},md5(#{password}))
+    </insert>
+
+    <select id="findAccount" resultMap="accountFileds">
+        select * from account where username=#{username}
+        <if test="password!=null and password!=''">
+            and password=md5(#{password})
+        </if>
+    </select>
+    <select id="findAccountByName" resultMap="accountFileds">
+        select * from account where username=#{username}
+    </select>
+    <update id="updateAccount">
+        update user set username=#{username},nick_name=#{nickName},sex=#{sex},age=#{age},address=#{address},register=now() where id=#{id}
+    </update>
+</mapper>

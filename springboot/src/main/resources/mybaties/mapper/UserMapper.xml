@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.mapper.UserMapper">
+
+    <resultMap id="userFileds" type="com.springboot.domain.User">
+        <result property="id" column="id"></result>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="nickName" column="nick_name"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+        <result property="register" column="register"></result>
+        <result property="age" column="age"></result>
+    </resultMap>
+    <update id="updateUser">
+        update user set username=#{username},nick_name=#{nickName},sex=#{sex},age=#{age},address=#{address},register=now(),photo=#{photo} where id=#{id}
+    </update>
+    <delete id="deleteUser">
+        delete from user where id=#{id}
+    </delete>
+    <select id="getUser" resultMap="userFileds">
+        select * from user where id = #{id};
+    </select>
+    <select id="getUsers" resultType="com.springboot.domain.User">
+        select * from user;
+    </select>
+    <select id="selectUser" resultType="com.springboot.domain.User">
+        select * from user
+        <if test="search !=null and search != ''">
+            where username like concat('%',#{search},'%')
+        </if>
+    </select>
+    <!--mybatis 使用自增主键,开启自增主键,开启的字段是 id-->
+    <insert id="saveUser" useGeneratedKeys="true" keyProperty="id">
+        insert into user (id, username, password, nick_name, sex, age, address, register,photo)
+        values (#{id},#{username},md5('123'),#{nickName},#{sex},#{age},#{address},now(),#{photo});
+    </insert>
+</mapper>
